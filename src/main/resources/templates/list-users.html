@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 class="h2">Liste des users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${users.empty}">
+                    <td colspan="3">Aucun user en base de données</td>
+                </tr>
+                <tr th:each="user: ${users}">
+                    <td><span th:text="${user.id}"> Prénom </span></td>
+                    <td><span th:text="${user.username}"> Nom </span></td>
+                    <td><span th:text="${user.email}"> Nom </span></td>
+                </tr>
+            </tbody>
+        </table>
+</body>
+</html>
