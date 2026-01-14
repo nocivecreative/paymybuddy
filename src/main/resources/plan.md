@@ -8,6 +8,7 @@ Home : [/home](http://localhost:8080/home)
 ### User 
 Connexion (sing-in) : [/user/sign-in](http://localhost:8080/user/sign-in)   
 Inscription (sing-up) : [/user/sign-up](http://localhost:8080/user/sign-up)  
+Déconnexion (logout) : [/user/logout](http://localhost:8080/user/logout)
 
 ## Auth required
 
@@ -18,6 +19,3 @@ Ajouter une relation (relations) : [/relations](http://localhost:8080/relations)
 ### Admin
 Page de profil (profil) : [/profil](http://localhost:8080/profil)  
 Editer son profil (profil/edit) : [/profil/edit](http://localhost:8080/profil/edit/edit)
-
-### Général
-Déconnexion (logout) : [/logout](http://localhost:8080/logout)
