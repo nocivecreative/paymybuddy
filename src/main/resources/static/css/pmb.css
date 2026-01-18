@@ -1,0 +1,20 @@
+:root {
+    --orange-pmb: #f69f1d;
+}
+
+.orange-bg{
+    background-color: var(--orange-pmb);
+}
+
+.pmb-logo.header{
+    width: 50px;
+}
+
+.pmb-typo{
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 700;
+}
+
+.eur::after{
+    content: ' €';
+}

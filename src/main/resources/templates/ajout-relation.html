@@ -21,14 +21,15 @@
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <img src="../assets/images/pmb_logo_145.png"class="pmb-logo header me-3" alt="PayMyBuddy">
+                <img src="../assets/images/pmb_logo_145.png" class="pmb-logo header me-3" alt="PayMyBuddy">
                 <h4>Pay My Buddy</h4>
             </a>
 
-            <ul class="nav nav-pills align-content-center gap-3">
+            <ul class="nav nav-pills align-content-center gap-3 gap-3">
                 <li class="nav-item"><a href="/transfert" class="nav-link">Tranférer</a></li>
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Profil</a></li>
-                <li class="nav-item"><a href="/ajout-relation" class="nav-link">Ajouter relation</a></li>
+                <li class="nav-item"><a href="/profil" class="nav-link">Profil</a></li>
+                <li class="nav-item"><a href="/ajout-relation" class="nav-link active" aria-current="page">Ajouter
+                        relation</a></li>
                 <li class="nav-item">
                     <form th:action="@{/logout}" method="post" class="d-inline">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -40,30 +41,22 @@
             </ul>
         </header>
     </div>
-    <div class="container d-flex justify-content-center">
-        <div class="card shadow p-4" style="width: 20rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <div class="card shadow p-4">
+                    <div class="row align-items-center">
+                        <div class="col-8 mb-3">
+                            <label for="username" class="form-label">Chercher une relation</label>
+                            <input name="username" type="text" class="form-control" aria-describedby="Username">
+                        </div>
+                        <div class="col-4">
 
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td class="fw-bold">Username</td>
-                            <td>@username</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Mail</td>
-                            <td>@username</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold">Passwaord</td>
-                            <td>@username</td>
-                        </tr>
-                    </tbody>
-
-                </table>
-                
-                <p class="text-center">
-                    <button type="submit" class="btn orange-bg text-end text-light fw-bold">Modifier</button>
-                </p>
+                            <button class="btn orange-bg p-3">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

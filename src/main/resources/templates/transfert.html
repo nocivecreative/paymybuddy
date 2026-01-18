@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayMyBuddy</title>
+
+    <!-- bootstrap 5.3.8 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- bootstrap icons 1.13.1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- css app -->
+    <link rel="stylesheet" href="../css/pmb.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="../assets/images/pmb_logo_145.png" class="pmb-logo header me-3" alt="PayMyBuddy">
+                <h4>Pay My Buddy</h4>
+            </a>
+
+            <ul class="nav nav-pills align-content-center gap-3">
+                <li class="nav-item"><a href="/transfert" class="nav-link active" aria-current="page">Tranférer</a></li>
+                <li class="nav-item"><a href="/profil" class="nav-link">Profil</a></li>
+                <li class="nav-item"><a href="/ajout-relation" class="nav-link">Ajouter relation</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-outline-danger">
+                            Se déconnecter
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </header>
+    </div>
+    <div class="container justify-content-center">
+        <div class="row align-items-center g-3">
+            <div class="col-4 dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Selectionner une relation
+                </button>
+                <ul class="col-4 dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+            <div class="col-2">
+                <input name="username" type="text" class="form-control" aria-describedby="Username"
+                    placeholder="Description">
+            </div>
+
+            <div class="col-2 input-group w-auto">
+                <input name="amount" type="number" class="form-control" min="0" step="0.01" placeholder="0">
+                <span class="input-group-text">€</span>
+            </div>
+
+            <div class="col-2">
+
+                <a class="btn btn-primary p-4">Payer</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <h3>Mes transactions</h3>
+            <div class="card">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Relation</th>
+                            <th>Description</th>
+                            <th class="text-end">Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rel1</td>
+                            <td>Desc1</td>
+                            <td class="text-end eur">Montant1</td>
+                        </tr>
+                        <tr>
+                            <td>Rel1</td>
+                            <td>Desc1</td>
+                            <td class="text-end eur">Montant1</td>
+                        </tr>
+                        <tr>
+                            <td>Rel1</td>
+                            <td>Desc1</td>
+                            <td class="text-end eur">Montant1</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
