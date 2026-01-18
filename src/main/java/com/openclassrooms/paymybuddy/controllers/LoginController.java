@@ -1,14 +1,14 @@
 package com.openclassrooms.paymybuddy.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class LoginController {
 
-    @GetMapping("/testuser")
-    public String getUser() {
-        return "Authentifié en tant qu'utilisateur";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
 }
