@@ -43,39 +43,41 @@
     <div class="container justify-content-center">
 
         <!-- Row action -->
-        <div class="row align-items-center g-3">
-            <!-- dropdown -->
-            <div class="col-4 dropdown">
+        <div class="row">
 
-                <select class="form-select" aria-label="Default select example" th:each="relation : ${relations}">
-                    <option selected disabled>Selectionner une relation</option>
-                    <option th:value="${relation.id}"  th:text="${relation.username  + ' (' + relation.email + ')'}">One</option>
-                </select>
+            <form th:action="@{/transfert}" method="post" class="d-flex align-items-center gap-3">
+                <!-- dropdown -->
+                <div class="col-4 dropdown">
+    
+                    <select class="form-select" name="friendId"  required>
+                        <option selected disabled>Selectionner une relation</option>
+                        <option 
+                            th:each="relation : ${relations}"
+                            th:value="${relation.id}" 
+                            th:text="${relation.username  + ' (' + relation.email + ')'}">
+                        </option>
+                    </select>
 
+                </div>
+    
+                <!-- description -->
+                <div class="col-2">
+                    <input name="description" type="text" class="form-control" aria-describedby="Description"
+                        placeholder="Description">
+                </div>
+    
+                <!-- Montant -->
+                <div class="col-2 input-group w-auto">
+                    <input name="amount" type="number" class="form-control" min="0" step="0.01" placeholder="0">
+                    <span class="input-group-text">€</span>
+                </div>
+    
+                <!-- CTA -->
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary p-4">Payer</button>
+                </div>
+            </form>
 
-                <ul class="col-4 dropdown-menu">
-                    <li th:each="relation : ${relations}">
-                        <a class="dropdown-item" href="#" th:text="${relation.email}">teeeest</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- description -->
-            <div class="col-2">
-                <input name="description" type="text" class="form-control" aria-describedby="Description"
-                    placeholder="Description">
-            </div>
-
-            <!-- Montant -->
-            <div class="col-2 input-group w-auto">
-                <input name="amount" type="number" class="form-control" min="0" step="0.01" placeholder="0">
-                <span class="input-group-text">€</span>
-            </div>
-
-            <!-- CTA -->
-            <div class="col-2">
-                <a class="btn btn-primary p-4">Payer</a>
-            </div>
 
         </div>
 
