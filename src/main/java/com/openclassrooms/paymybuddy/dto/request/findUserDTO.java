@@ -1,12 +1,14 @@
 package com.openclassrooms.paymybuddy.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor // No + All : Assure la stabilité du bonding Spring
+@AllArgsConstructor
 public class FindUserDTO {
 
-    private final String mail;
+    private String mail;
 
 }
