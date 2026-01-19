@@ -41,34 +41,45 @@
         </header>
     </div>
     <div class="container justify-content-center">
+
+        <!-- Row action -->
         <div class="row align-items-center g-3">
+            <!-- dropdown -->
             <div class="col-4 dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Selectionner une relation
-                </button>
+
+                <select class="form-select" aria-label="Default select example" th:each="relation : ${relations}">
+                    <option selected disabled>Selectionner une relation</option>
+                    <option th:value="${relation.id}"  th:text="${relation.username  + ' (' + relation.email + ')'}">One</option>
+                </select>
+
+
                 <ul class="col-4 dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li th:each="relation : ${relations}">
+                        <a class="dropdown-item" href="#" th:text="${relation.email}">teeeest</a>
+                    </li>
                 </ul>
             </div>
+
+            <!-- description -->
             <div class="col-2">
-                <input name="username" type="text" class="form-control" aria-describedby="Username"
+                <input name="description" type="text" class="form-control" aria-describedby="Description"
                     placeholder="Description">
             </div>
 
+            <!-- Montant -->
             <div class="col-2 input-group w-auto">
                 <input name="amount" type="number" class="form-control" min="0" step="0.01" placeholder="0">
                 <span class="input-group-text">€</span>
             </div>
 
+            <!-- CTA -->
             <div class="col-2">
-
                 <a class="btn btn-primary p-4">Payer</a>
             </div>
 
         </div>
+
+        <!-- Row Table transactions -->
         <div class="row">
             <h3>Mes transactions</h3>
             <div class="card">
@@ -110,4 +121,5 @@
         crossorigin="anonymous"></script>
 
 </body>
+
 </html>
