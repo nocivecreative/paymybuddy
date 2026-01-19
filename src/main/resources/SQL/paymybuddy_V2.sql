@@ -32,7 +32,7 @@ CREATE TABLE `paymybuddy`.`transactions` (
     `id_user_sender` INT NOT NULL,
     `id_user_receiver` INT NOT NULL,
     `amount` DECIMAL(10,2) NOT NULL,
-    `description` TEXT NULL,
+    `description` VARCHAR(255) NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
     PRIMARY KEY (`id`),
