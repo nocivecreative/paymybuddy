@@ -24,6 +24,20 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    /**
+     * Ajoute une relation entre l'utilisateur connecté à l'application et un
+     * utilisateur enregistré via son adresse mail
+     * 
+     * <li>Vérifie si les deux utilisateuur existent
+     * <li>Empêche de s'ajouter soi-même
+     * <li>Vérifie si la raletion existe déjà <br>
+     * 
+     * @param currentUserId id de l'utilisateur connecté
+     * @param friendEmail   adresse mail de l'utilisateur à ajouter
+     * 
+     * @throws UserNotFoundException    si l'utilisateur n'est pas trouvé
+     * @throws IllegalArgumentException gère les autres erreurs
+     */
     public void addRelation(int currentUserId, String friendEmail) {
 
         User currentUser = userRepository.findById(currentUserId)
@@ -45,9 +59,15 @@ public class UserService {
 
     }
 
-    public List<RelationDTO> getRelations(int id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : ID=" + id));
+    /**
+     * Récupère la liste des relations existantes de l'utilisateur connecté
+     * 
+     * @param currentUserId l'id de l'utilisaateur connecté
+     * @return La liste des realtions existantes
+     */
+    public List<RelationDTO> getRelations(int currentUserId) {
+        User user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : ID=" + currentUserId));
 
         List<UserRelation> relationsList = userRelationRepository.findByUser(user);
 
