@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class findUserDTO {
+public class FindUserDTO {
 
-    private final String email;
+    private final String mail;
 
 }

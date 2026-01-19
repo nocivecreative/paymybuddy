@@ -1,11 +1,13 @@
 package com.openclassrooms.paymybuddy.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import com.openclassrooms.paymybuddy.dto.request.findUserDTO;
+import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
+import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,9 +46,12 @@ public class UserController {
     }
 
     @PostMapping("/ajout-relation")
-    public String postMethodName(@RequestBody findUserDTO findUserDTO) {
+    public String postMethodName(
+            @ModelAttribute FindUserDTO findUserDTO,
+            @AuthenticationPrincipal SecurityUser securityUser) {
 
-        return null;
+        userService.addRelation(securityUser.getId(), findUserDTO.getMail());
+        return "redirect:/transfert";
     }
 
 }
