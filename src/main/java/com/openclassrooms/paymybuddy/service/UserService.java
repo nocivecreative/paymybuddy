@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
 import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.model.UserRelation;
@@ -42,6 +43,20 @@ public class UserService {
         UserRelation relation = new UserRelation(currentUser, friend);
         userRelationRepository.save(relation);
 
+    }
+
+    public List<RelationDTO> getRelations(int id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : ID=" + id));
+
+        List<UserRelation> relationsList = userRelationRepository.findByUser(user);
+
+        return relationsList.stream()
+                .map(relation -> new RelationDTO(
+                        relation.getFriend().getId(),
+                        relation.getFriend().getUsername(),
+                        relation.getFriend().getEmail()))
+                .toList();
     }
 
 }
