@@ -9,8 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.openclassrooms.paymybuddy.model.User;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * Cette Class est crée uniquement pour différencier le type User de PayMyBuddy
@@ -19,8 +18,7 @@ import lombok.Data;
  * 
  * Il n'est pas prévu d'avoir des rôles en base, donc on hardcode un role "USER"
  */
-@Data
-@AllArgsConstructor
+@Getter
 public class SecurityUser implements UserDetails {
 
     private final int id;
