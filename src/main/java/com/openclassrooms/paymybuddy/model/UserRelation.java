@@ -15,19 +15,18 @@ import lombok.Data;
 @Entity
 @Table(name = "users_relations")
 @Data
-
 public class UserRelation {
 
     @EmbeddedId
     private UserRelationId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("userId")
+    @MapsId("userId") // PK Composite
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("friendId")
+    @MapsId("friendId") // PK Composite
     @JoinColumn(name = "id_friend", nullable = false)
     private User friend;
 
