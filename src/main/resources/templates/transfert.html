@@ -94,22 +94,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Rel1</td>
-                            <td>Desc1</td>
-                            <td class="text-end eur">Montant1</td>
+                        <tr th:each="transaction: ${transactions}">
+                            <td th:text="${transaction.relationUserName + ' (' + transaction.relationMail + ')'}"></td>
+                            <td th:text="${transaction.description}"></td>
+                            <td th:text="${transaction.amount}" class="text-end eur"></td>
                         </tr>
-                        <tr>
-                            <td>Rel1</td>
-                            <td>Desc1</td>
-                            <td class="text-end eur">Montant1</td>
-                        </tr>
-                        <tr>
-                            <td>Rel1</td>
-                            <td>Desc1</td>
-                            <td class="text-end eur">Montant1</td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>

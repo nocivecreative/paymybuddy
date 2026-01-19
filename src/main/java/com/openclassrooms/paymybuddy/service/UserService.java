@@ -1,10 +1,12 @@
 package com.openclassrooms.paymybuddy.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
 import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.model.Transaction;
@@ -108,6 +110,27 @@ public class UserService {
         Transaction transaction = new Transaction(source, friend, amount, description);
 
         transactionRepository.save(transaction);
+
+    }
+
+    public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
+
+        User source = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
+
+        List<Transaction> transactions = transactionRepository.findBySenderId(currentUserId);
+
+        List<ExistingTransactionDTO> existingTransactions = new ArrayList<>();
+
+        for (Transaction transaction : transactions) {
+            existingTransactions.add(new ExistingTransactionDTO(
+                    transaction.getReceiver().getUsername(),
+                    transaction.getReceiver().getEmail(),
+                    transaction.getAmount(),
+                    transaction.getDescription()));
+        }
+
+        return existingTransactions;
 
     }
 

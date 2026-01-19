@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
 import com.openclassrooms.paymybuddy.dto.request.NewTransactionDTO;
+import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.UserService;
@@ -43,12 +44,14 @@ public class UserController {
     @GetMapping("/transfert")
     public String tansfert(
             Model model,
-            @AuthenticationPrincipal SecurityUser securityUser) {
+            @AuthenticationPrincipal SecurityUser currenUser) {
 
-        List<RelationDTO> relations = userService.getRelations(securityUser.getId());
+        List<RelationDTO> relations = userService.getRelations(currenUser.getId());
+
+        List<ExistingTransactionDTO> transactions = userService.getAllTransactions(currenUser.getId());
 
         model.addAttribute("relations", relations);
-
+        model.addAttribute("transactions", transactions);
         return "transfert";
     }
 
