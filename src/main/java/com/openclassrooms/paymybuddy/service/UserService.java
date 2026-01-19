@@ -1,13 +1,14 @@
 package com.openclassrooms.paymybuddy.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
+import com.openclassrooms.paymybuddy.exceptions.UserAlreadyExistsException;
 import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.model.Transaction;
 import com.openclassrooms.paymybuddy.model.User;
@@ -22,13 +23,25 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
     private final UserRelationRepository userRelationRepository;
     private final TransactionsRepository transactionRepository;
+    private final BCryptPasswordEncoder encoder;
 
-    public List<User> listAllUserForTest() { // TODO remove après tests
-        return userRepository.findAll();
+    /**
+     * Crée un compte utilisateur
+     * 
+     * @param newUser Le nouvel utilisateur à créer
+     */
+    public void createAccount(User newUser) {
+        if (userRepository.findByUsername(newUser.getUsername()).isPresent()
+                || userRepository.findByEmail(newUser.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("Utilisateur existant");
+        }
+
+        newUser.setPassword(encoder.encode(newUser.getPassword()));
+
+        userRepository.save(newUser);
     }
 
     /**
@@ -115,23 +128,27 @@ public class UserService {
 
     public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
 
-        User source = userRepository.findById(currentUserId)
+        userRepository.findById(currentUserId)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
 
-        List<Transaction> transactions = transactionRepository.findBySenderId(currentUserId);
+        return transactionRepository
+                .findBySenderId(currentUserId)
+                .stream()
+                .map(transaction -> new ExistingTransactionDTO(
+                        transaction.getReceiver().getUsername(),
+                        transaction.getReceiver().getEmail(),
+                        transaction.getAmount(),
+                        transaction.getDescription()))
+                .toList();
 
-        List<ExistingTransactionDTO> existingTransactions = new ArrayList<>();
+    }
 
-        for (Transaction transaction : transactions) {
-            existingTransactions.add(new ExistingTransactionDTO(
-                    transaction.getReceiver().getUsername(),
-                    transaction.getReceiver().getEmail(),
-                    transaction.getAmount(),
-                    transaction.getDescription()));
-        }
+    @Transactional
+    public void updateUserInfos(User newUser) {
+        // Encodage du password
+        newUser.setPassword(encoder.encode(newUser.getPassword()));
 
-        return existingTransactions;
-
+        userRepository.save(newUser);
     }
 
 }
