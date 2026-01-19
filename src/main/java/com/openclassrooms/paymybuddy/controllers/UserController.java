@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
+import com.openclassrooms.paymybuddy.dto.request.NewTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.UserService;
@@ -51,6 +52,17 @@ public class UserController {
         return "transfert";
     }
 
+    @PostMapping("/transfert")
+    public String transfert(
+            @ModelAttribute NewTransactionDTO transaction,
+            @AuthenticationPrincipal SecurityUser currenUser) {
+
+        userService.doTranscation(currenUser.getId(), transaction.getFriendId(), transaction.getAmount(),
+                transaction.getDescription());
+
+        return "redirect:/transfert";
+    }
+
     @GetMapping("/ajout-relation")
     public String getAddRelation() {
         return "ajout-relation";
@@ -59,9 +71,9 @@ public class UserController {
     @PostMapping("/ajout-relation")
     public String postAddRelation(
             @ModelAttribute FindUserDTO findUserDTO,
-            @AuthenticationPrincipal SecurityUser securityUser) {
+            @AuthenticationPrincipal SecurityUser currentUser) {
 
-        userService.addRelation(securityUser.getId(), findUserDTO.getMail());
+        userService.addRelation(currentUser.getId(), findUserDTO.getMail());
 
         return "redirect:/transfert";
     }
