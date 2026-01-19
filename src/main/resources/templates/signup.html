@@ -1,36 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PayMyBuddy</title>
+
+    <!-- bootstrap 5.3.8 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- bootstrap icons 1.13.1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- css app -->
+    <link rel="stylesheet" href="../css/pmb.css">
 </head>
 
 <body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img src="../assets/images/pmb_logo_145.png" class="pmb-logo header me-3" alt="PayMyBuddy">
+                <h4>Pay My Buddy</h4>
+            </a>
 
-
-    <h1>Signup de test</h1>
-
-    <form th:action="@{/signup}" th:object="${user}" method="post">
-
-        <label>Username</label>
-        <input type="text" th:field="*{username}" />
-
-        <label>Email</label>
-        <input type="email" th:field="*{email}" />
-
-        <label>Password</label>
-        <input type="password" th:field="*{password}" />
-
-        <button type="submit">Sign-up</button>
-
-    </form>
-
-    <div th:if="${errorMessage}" style="color:red;">
-        <p th:text="${errorMessage}"></p>
+            <!-- <ul class="nav nav-pills align-content-center gap-3">
+                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Tranférer</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Profil</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Ajouter relation</a></li>
+                <li class="nav-item"><a href="#" class="btn btn-outline-danger">Se déconnecter</a></li>
+            </ul> -->
+        </header>
     </div>
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow p-4" style="width: 20rem;">
 
+
+            <form th:action="@{/signup}" method="post">
+                <p>
+                <h2 class="text-center"><span class="badge orange-bg text-light p-3">Pay my Buddy</span></h2>
+                </p>
+                <p>
+                <h3>Création d'un compte</h3>
+                </p>
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input name="username" type="text" class="form-control" aria-describedby="Username">
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Adresse mail</label>
+                    <input name="email" type="email" class="form-control"
+                        aria-describedby="Adresse mail">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control">
+                </div>
+
+                <div th:if="${param.error}" class="text-danger mb-3">
+                    Utilisateur existant
+                </div>
+
+                <p class="text-center">
+                    <button type="submit" class="btn btn-primary text-end">S'inscrire</button>
+                </p>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
