@@ -41,6 +41,10 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/signup", "/css/**", "/assets/**").permitAll()
                         .anyRequest().hasRole("USER"))
+                .sessionManagement(session -> session
+                        .sessionFixation().migrateSession() // crée un nouvel ID de session - Invalide l'ancienne
+                                                            // session
+                        .maximumSessions(1)) // une seule session active à la fois (Empêche le multi-login)
                 .formLogin(form -> form
                         .loginPage("/login") // GET
                         .loginProcessingUrl("/login") // POST (important)
@@ -69,7 +73,7 @@ public class SpringSecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
-            BCryptPasswordEncoder bCryptPasswordEncoder) {
+            BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(customUserDetailsService)
