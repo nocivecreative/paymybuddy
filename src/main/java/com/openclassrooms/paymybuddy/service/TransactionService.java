@@ -1,0 +1,74 @@
+package com.openclassrooms.paymybuddy.service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
+import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
+import com.openclassrooms.paymybuddy.model.Transaction;
+import com.openclassrooms.paymybuddy.model.User;
+import com.openclassrooms.paymybuddy.repository.TransactionsRepository;
+import com.openclassrooms.paymybuddy.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class TransactionService implements TransactionManagementInterface {
+
+    private final UserRepository userRepository;
+    private final TransactionsRepository transactionRepository;
+
+    @Override
+    public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
+
+        userRepository.findById(currentUserId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
+
+        return transactionRepository
+                .findBySenderId(currentUserId)
+                .stream()
+                .map(transaction -> new ExistingTransactionDTO(
+                        transaction.getReceiver().getUsername(),
+                        transaction.getReceiver().getEmail(),
+                        transaction.getAmount(),
+                        transaction.getDescription()))
+                .toList();
+
+    }
+
+    /**
+     * Effectue une transaction entre l'uutilisateur connecté, et l'utilisateur
+     * cible choisi.
+     * 
+     * @param currentUserId Utilisateur connecté
+     * @param idFriend      Utilisateur cible
+     * @param amount        Somme à transferer
+     * @param description   Texte de description pour la transacrion
+     * 
+     * @throws UserNotFoundException Si l'utilisateur (source ou cible) n'est pas
+     *                               trouvé
+     */
+    @Override
+    @Transactional
+    public void doTranscation(int currentUserId, int idFriend, BigDecimal amount, String description) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Le montant doit etre positif");
+        }
+
+        User source = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
+
+        User friend = userRepository.findById(idFriend)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur cible introuvable : ID=" + idFriend));
+
+        Transaction transaction = new Transaction(source, friend, amount, description);
+
+        transactionRepository.save(transaction);
+
+    }
+}
