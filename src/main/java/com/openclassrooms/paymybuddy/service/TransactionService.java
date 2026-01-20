@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
@@ -12,7 +15,6 @@ import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.TransactionsRepository;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -53,8 +55,9 @@ public class TransactionService implements TransactionManagementInterface {
      *                               trouvé
      */
     @Override
-    @Transactional
-    public void doTranscation(int currentUserId, int idFriend, BigDecimal amount, String description) {
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE, // Evite les lectures fantomes
+            propagation = Propagation.REQUIRED)
+    public void doTransaction(int currentUserId, int idFriend, BigDecimal amount, String description) {
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Le montant doit etre positif");

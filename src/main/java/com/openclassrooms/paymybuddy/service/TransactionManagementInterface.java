@@ -9,5 +9,5 @@ public interface TransactionManagementInterface {
 
     public List<ExistingTransactionDTO> getAllTransactions(int currentUserId);
 
-    public void doTranscation(int currentUserId, int idFriend, BigDecimal amount, String description);
+    public void doTransaction(int currentUserId, int idFriend, BigDecimal amount, String description);
 }

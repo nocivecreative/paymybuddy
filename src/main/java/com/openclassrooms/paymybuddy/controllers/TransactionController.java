@@ -50,7 +50,7 @@ public class TransactionController {
             return "transfert";
         }
 
-        transactionService.doTranscation(currenUser.getId(),
+        transactionService.doTransaction(currenUser.getId(),
                 transaction.getFriendId(),
                 transaction.getAmount(),
                 transaction.getDescription());
