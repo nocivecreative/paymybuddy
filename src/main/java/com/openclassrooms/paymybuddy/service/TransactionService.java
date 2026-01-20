@@ -28,7 +28,7 @@ public class TransactionService implements TransactionManagementInterface {
     public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
 
         userRepository.findById(currentUserId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable"));
 
         return transactionRepository
                 .findBySenderId(currentUserId)
@@ -64,10 +64,10 @@ public class TransactionService implements TransactionManagementInterface {
         }
 
         User source = userRepository.findById(currentUserId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable"));
 
         User friend = userRepository.findById(idFriend)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur cible introuvable : ID=" + idFriend));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur cible introuvable"));
 
         Transaction transaction = new Transaction(source, friend, amount, description);
 

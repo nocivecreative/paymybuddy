@@ -40,10 +40,10 @@ public class RelationService implements RelationManagementInterface {
     public void addRelation(int currentUserId, String friendEmail) {
 
         User currentUser = userRepository.findById(currentUserId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : ID=" + currentUserId));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
 
         User friend = userRepository.findByEmail(friendEmail)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : mail=" + friendEmail));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
 
         if (currentUser.getId().equals(friend.getId())) {
             throw new IllegalArgumentException("Impossible de s'ajouter soi-même");
