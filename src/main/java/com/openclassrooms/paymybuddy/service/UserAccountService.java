@@ -24,8 +24,8 @@ public class UserAccountService implements AccountManagementInterface {
     @Override
     @Transactional
     public void createAccount(User newUser) {
-        if (userRepository.findByUsername(newUser.getUsername()).isPresent()
-                || userRepository.findByEmail(newUser.getEmail()).isPresent()) {
+        if (userRepository.existsByUsername(newUser.getUsername())
+                || userRepository.existsByEmail(newUser.getEmail())) {
             throw new UserAlreadyExistsException("Utilisateur existant");
         }
 
