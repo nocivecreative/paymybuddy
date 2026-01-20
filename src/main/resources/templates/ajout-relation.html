@@ -50,7 +50,7 @@
                         <form th:action="@{/ajout-relation}" method="post" class="d-flex align-items-end gap-3">
                             <div class="col-8">
                                 <label for="mail" class="form-label">Chercher une relation</label>
-                                <input name="mail" type="text" class="form-control" aria-describedby="mail" placeholder="Saisir une adresse mail"> <!-- TODO changeer type vers mail après test -->
+                                <input name="mail" type="email" class="form-control" aria-describedby="mail" placeholder="Saisir une adresse mail" required>
                             </div>
 
                             <div class="col-4">

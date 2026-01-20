@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +14,14 @@ import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
 import com.openclassrooms.paymybuddy.dto.request.NewPassDTO;
 import com.openclassrooms.paymybuddy.dto.request.NewTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.request.NewUserDTO;
-import com.openclassrooms.paymybuddy.dto.request.UserProfilDTO;
 import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
+import com.openclassrooms.paymybuddy.dto.response.UserProfilDTO;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -39,8 +41,10 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String postSignup(@ModelAttribute NewUserDTO newUserDto) {
-
+    public String postSignup(@Valid @ModelAttribute NewUserDTO newUserDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "signup";
+        }
         User newUser = new User(
                 newUserDto.getUsername(),
                 newUserDto.getEmail(),
@@ -67,8 +71,12 @@ public class UserController {
     @PostMapping("/profil")
     public String profilEdit(
             @ModelAttribute NewPassDTO newPass,
-            @AuthenticationPrincipal SecurityUser currentUser) {
+            @AuthenticationPrincipal SecurityUser currentUser,
+            BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return "profil";
+        }
         User newUserInfos = new User(currentUser.getId(), currentUser.getUsername(), currentUser.getEmail(),
                 newPass.getPassword());
 
@@ -94,9 +102,16 @@ public class UserController {
     @PostMapping("/transfert")
     public String transfert(
             @ModelAttribute NewTransactionDTO transaction,
-            @AuthenticationPrincipal SecurityUser currenUser) {
+            @AuthenticationPrincipal SecurityUser currenUser,
+            BindingResult bindingResult) {
 
-        userService.doTranscation(currenUser.getId(), transaction.getFriendId(), transaction.getAmount(),
+        if (bindingResult.hasErrors()) {
+            return "transfert";
+        }
+
+        userService.doTranscation(currenUser.getId(),
+                transaction.getFriendId(),
+                transaction.getAmount(),
                 transaction.getDescription());
 
         return "redirect:/transfert";
@@ -110,7 +125,12 @@ public class UserController {
     @PostMapping("/ajout-relation")
     public String postAddRelation(
             @ModelAttribute FindUserDTO findUserDTO,
-            @AuthenticationPrincipal SecurityUser currentUser) {
+            @AuthenticationPrincipal SecurityUser currentUser,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "transfert";
+        }
 
         userService.addRelation(currentUser.getId(), findUserDTO.getMail());
 

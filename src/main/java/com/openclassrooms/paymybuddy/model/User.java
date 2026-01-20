@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,12 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", insertable = false, updatable = false)
+    private LocalDateTime updatedAt;
 
     public User(int id, String username, String email, String password) {
         this.id = id;

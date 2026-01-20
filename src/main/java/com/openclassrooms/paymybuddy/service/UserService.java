@@ -87,9 +87,9 @@ public class UserService {
      */
     public List<RelationDTO> getRelations(int currentUserId) {
         User user = userRepository.findById(currentUserId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable : ID=" + currentUserId));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
 
-        List<UserRelation> relationsList = userRelationRepository.findByUser(user);
+        List<UserRelation> relationsList = userRelationRepository.findByUserWithFriend(user);
 
         return relationsList.stream()
                 .map(relation -> new RelationDTO(
@@ -113,6 +113,10 @@ public class UserService {
      */
     @Transactional
     public void doTranscation(int currentUserId, int idFriend, BigDecimal amount, String description) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Le montant doit etre positif");
+        }
 
         User source = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur source introuvable : ID=" + currentUserId));

@@ -1,4 +1,4 @@
-package com.openclassrooms.paymybuddy.dto.request;
+package com.openclassrooms.paymybuddy.dto.response;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

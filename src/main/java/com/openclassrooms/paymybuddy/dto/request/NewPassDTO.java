@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -7,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NewPassDTO {
 
+    @NotBlank(message = "Le mot de passe est obligatoire")
+    @Size(min = 4, message = "Minimum 4 caracteres")
     private final String password;
 
 }

@@ -44,15 +44,15 @@
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input name="username" type="text" class="form-control" aria-describedby="Username">
+                    <input name="username" type="text" class="form-control" aria-describedby="Username" required>
                 </div>
                 <div class="mb-3">
                     <label for="mail" class="form-label">Mail</label>
-                    <input name="mail" type="text" class="form-control" aria-describedby="Adresse Mail">
+                    <input name="mail" type="text" class="form-control" aria-describedby="Adresse Mail" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control">
+                    <input name="password" type="password" class="form-control" required>
                 </div>
 
                 <div th:if="${param.error}" class="text-danger">
