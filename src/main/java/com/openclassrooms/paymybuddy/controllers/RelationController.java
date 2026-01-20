@@ -13,17 +13,33 @@ import com.openclassrooms.paymybuddy.service.RelationService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller pour gérer les relations entre utilisateurs.
+ */
 @Controller
 @RequiredArgsConstructor
 public class RelationController {
 
     private final RelationService relationService;
 
+    /**
+     * Affiche la page d'ajout de relation.
+     *
+     * @return la vue ajout-relation
+     */
     @GetMapping("/ajout-relation")
     public String getAddRelation() {
         return "ajout-relation";
     }
 
+    /**
+     * Ajoute une nouvelle relation pour l'utilisateur connecté.
+     *
+     * @param findUserDTO   données du formulaire avec l'email de l'ami
+     * @param currentUser   l'utilisateur connecté
+     * @param bindingResult résultat de la validation
+     * @return redirection vers la page transfert
+     */
     @PostMapping("/ajout-relation")
     public String postAddRelation(
             @ModelAttribute FindUserDTO findUserDTO,

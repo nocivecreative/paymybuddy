@@ -10,6 +10,9 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Service personnalisé pour charger les utilisateurs dans Spring Security.
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {

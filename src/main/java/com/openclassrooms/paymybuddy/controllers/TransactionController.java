@@ -19,6 +19,9 @@ import com.openclassrooms.paymybuddy.service.TransactionService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller pour gérer les transactions entre utilisateurs.
+ */
 @Controller
 @RequiredArgsConstructor
 public class TransactionController {
@@ -26,6 +29,13 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final RelationService relationService;
 
+    /**
+     * Affiche la page de transfert avec les relations et transactions.
+     *
+     * @param model       le modèle pour la vue
+     * @param currentUser l'utilisateur connecté
+     * @return la vue transfert
+     */
     @GetMapping("/transfert")
     public String tansfert(
             Model model,
@@ -40,6 +50,14 @@ public class TransactionController {
         return "transfert";
     }
 
+    /**
+     * Effectue un transfert d'argent vers un ami.
+     *
+     * @param transaction   données de la transaction (ami, montant, description)
+     * @param currenUser    l'utilisateur connecté
+     * @param bindingResult résultat de la validation
+     * @return redirection vers transfert
+     */
     @PostMapping("/transfert")
     public String transfert(
             @ModelAttribute NewTransactionDTO transaction,

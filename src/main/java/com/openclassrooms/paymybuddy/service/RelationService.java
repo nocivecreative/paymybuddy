@@ -14,6 +14,9 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Service pour la gestion des relations entre utilisateurs.
+ */
 @Service
 @AllArgsConstructor
 public class RelationService implements RelationManagementInterface {

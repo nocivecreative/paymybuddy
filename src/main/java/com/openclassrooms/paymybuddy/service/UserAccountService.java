@@ -10,6 +10,9 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
+/**
+ * Service pour la gestion des comptes utilisateurs.
+ */
 @Service
 @AllArgsConstructor
 public class UserAccountService implements AccountManagementInterface {
@@ -34,6 +37,11 @@ public class UserAccountService implements AccountManagementInterface {
         userRepository.save(newUser);
     }
 
+    /**
+     * Met à jour les informations d'un utilisateur (mot de passe).
+     *
+     * @param newUser l'utilisateur avec les nouvelles infos
+     */
     @Override
     @Transactional
     public void updateUserInfos(User newUser) {

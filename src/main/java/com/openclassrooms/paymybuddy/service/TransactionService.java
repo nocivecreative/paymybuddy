@@ -17,6 +17,9 @@ import com.openclassrooms.paymybuddy.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Service pour la gestion des transactions entre utilisateurs.
+ */
 @Service
 @AllArgsConstructor
 public class TransactionService implements TransactionManagementInterface {
@@ -24,6 +27,12 @@ public class TransactionService implements TransactionManagementInterface {
     private final UserRepository userRepository;
     private final TransactionsRepository transactionRepository;
 
+    /**
+     * Récupère toutes les transactions envoyées par l'utilisateur.
+     *
+     * @param currentUserId id de l'utilisateur connecté
+     * @return la liste des transactions
+     */
     @Override
     public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
 
