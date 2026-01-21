@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class NewPassDTO {
 
     @NotBlank(message = "Le mot de passe est obligatoire")
-    @Size(min = 4, message = "Minimum 4 caracteres")
+    @Size(min = 12, message = "Minimum 12 caracteres")
     private final String password;
 
 }
