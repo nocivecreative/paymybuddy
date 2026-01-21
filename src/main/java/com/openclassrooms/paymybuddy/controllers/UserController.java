@@ -78,7 +78,7 @@ public class UserController {
      * @return la vue profil
      */
     @GetMapping("/profil")
-    public String getMethodName(
+    public String getProfil(
             Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
@@ -99,9 +99,9 @@ public class UserController {
      */
     @PostMapping("/profil")
     public String profilEdit(
-            @ModelAttribute NewPassDTO newPass,
-            @AuthenticationPrincipal SecurityUser currentUser,
-            BindingResult bindingResult) {
+            @ModelAttribute @Valid NewPassDTO newPass,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
             return "profil";

@@ -17,6 +17,7 @@ import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.RelationService;
 import com.openclassrooms.paymybuddy.service.TransactionService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -37,7 +38,7 @@ public class TransactionController {
      * @return la vue transfert
      */
     @GetMapping("/transfert")
-    public String tansfert(
+    public String transfert(
             Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
@@ -54,21 +55,21 @@ public class TransactionController {
      * Effectue un transfert d'argent vers un ami.
      *
      * @param transaction   données de la transaction (ami, montant, description)
-     * @param currenUser    l'utilisateur connecté
+     * @param currentUser   l'utilisateur connecté
      * @param bindingResult résultat de la validation
      * @return redirection vers transfert
      */
     @PostMapping("/transfert")
     public String transfert(
-            @ModelAttribute NewTransactionDTO transaction,
-            @AuthenticationPrincipal SecurityUser currenUser,
-            BindingResult bindingResult) {
+            @ModelAttribute @Valid NewTransactionDTO transaction,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
             return "transfert";
         }
 
-        transactionService.doTransaction(currenUser.getId(),
+        transactionService.doTransaction(currentUser.getId(),
                 transaction.getFriendId(),
                 transaction.getAmount(),
                 transaction.getDescription());
