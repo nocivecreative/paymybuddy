@@ -1,16 +1,20 @@
 package com.openclassrooms.paymybuddy.controllers;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
@@ -22,6 +26,9 @@ class RelationControllerTest {
 
     @Mock
     private RelationService relationService;
+
+    @Mock
+    private Model model;
 
     @Mock
     private BindingResult bindingResult;
@@ -42,7 +49,7 @@ class RelationControllerTest {
         // Arrange - nothing to arrange
 
         // Act
-        String result = relationController.getAddRelation();
+        String result = relationController.getAddRelation(model);
 
         // Assert
         assertEquals("ajout-relation", result);
@@ -73,7 +80,7 @@ class RelationControllerTest {
         String result = relationController.postAddRelation(findUserDTO, bindingResult, securityUser);
 
         // Assert
-        assertEquals("transfert", result);
+        assertEquals("ajout-relation", result);
         verify(relationService, never()).addRelation(anyInt(), anyString());
     }
 }

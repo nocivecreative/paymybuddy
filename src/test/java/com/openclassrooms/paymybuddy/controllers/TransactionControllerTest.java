@@ -59,12 +59,13 @@ class TransactionControllerTest {
         when(transactionService.getAllTransactions(anyInt())).thenReturn(List.of());
 
         // Act
-        String result = transactionController.transfert(model, securityUser);
+        String result = transactionController.getTransfert(model, securityUser);
 
         // Assert
         assertEquals("transfert", result);
         verify(model).addAttribute(eq("relations"), any());
         verify(model).addAttribute(eq("transactions"), any());
+        verify(model).addAttribute(eq("newTransactionDTO"), any(NewTransactionDTO.class));
     }
 
     @Test
@@ -75,7 +76,7 @@ class TransactionControllerTest {
         doNothing().when(transactionService).doTransaction(anyInt(), anyInt(), any(BigDecimal.class), any());
 
         // Act
-        String result = transactionController.transfert(transaction, bindingResult, securityUser);
+        String result = transactionController.postTransfert(transaction, bindingResult, model, securityUser);
 
         // Assert
         assertEquals("redirect:/transfert", result);
@@ -89,7 +90,7 @@ class TransactionControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         // Act
-        String result = transactionController.transfert(transaction, bindingResult, securityUser);
+        String result = transactionController.postTransfert(transaction, bindingResult, model, securityUser);
 
         // Assert
         assertEquals("transfert", result);

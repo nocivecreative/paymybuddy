@@ -64,7 +64,7 @@ class UserControllerTest {
         // Arrange - nothing to arrange
 
         // Act
-        String result = userController.getSignup();
+        String result = userController.getSignup(model);
 
         // Assert
         assertEquals("signup", result);
@@ -119,7 +119,7 @@ class UserControllerTest {
         doNothing().when(userService).updateUserInfos(any(User.class));
 
         // Act
-        String result = userController.profilEdit(newPassDTO, bindingResult, securityUser);
+        String result = userController.postProfil(newPassDTO, bindingResult, model, securityUser);
 
         // Assert
         assertEquals("redirect:/profil", result);
@@ -133,7 +133,7 @@ class UserControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         // Act
-        String result = userController.profilEdit(newPassDTO, bindingResult, securityUser);
+        String result = userController.postProfil(newPassDTO, bindingResult, model, securityUser);
 
         // Assert
         assertEquals("profil", result);
