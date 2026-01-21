@@ -61,12 +61,11 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "signup";
         }
-        User newUser = new User(
+
+        userService.createAccount(new User(
                 newUserDto.getUsername(),
                 newUserDto.getEmail(),
-                newUserDto.getPassword());
-
-        userService.createAccount(newUser);
+                newUserDto.getPassword()));
 
         return "redirect:/login";
     }
