@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RelationDTO {
 
-    private final int id;
+    private final Integer id;
     private final String username;
     private final String email;
 

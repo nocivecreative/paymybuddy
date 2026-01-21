@@ -21,7 +21,7 @@ import lombok.Getter;
 @Getter
 public class SecurityUser implements UserDetails {
 
-    private final int id;
+    private final Integer id;
     private final String username;
     private final String email;
     private final String password;

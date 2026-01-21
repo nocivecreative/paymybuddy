@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class NewTransactionDTO {
 
     @Min(value = 1, message = "L'id de l'utilisateur source est obligatoire")
-    private int userId;
+    private Integer userId;
 
     @Min(value = 1, message = "L'id de l'utilisateur de destination est obligatoire")
-    private int friendId;
+    private Integer friendId;
 
     @NotNull(message = "Le montant est obligatoire")
     @DecimalMin(value = "0.01", inclusive = true, message = "Le montant doit être strictement positif")
