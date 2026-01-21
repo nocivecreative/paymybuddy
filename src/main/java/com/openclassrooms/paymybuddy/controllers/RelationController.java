@@ -11,6 +11,7 @@ import com.openclassrooms.paymybuddy.dto.request.FindUserDTO;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.RelationService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -42,12 +43,12 @@ public class RelationController {
      */
     @PostMapping("/ajout-relation")
     public String postAddRelation(
-            @ModelAttribute FindUserDTO findUserDTO,
-            @AuthenticationPrincipal SecurityUser currentUser,
-            BindingResult bindingResult) {
+            @ModelAttribute @Valid FindUserDTO findUserDTO,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
-            return "transfert";
+            return "ajout-relation";
         }
 
         relationService.addRelation(currentUser.getId(), findUserDTO.getMail());
