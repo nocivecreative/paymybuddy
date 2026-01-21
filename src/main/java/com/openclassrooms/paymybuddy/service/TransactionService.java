@@ -34,6 +34,7 @@ public class TransactionService implements TransactionManagementInterface {
      * @return la liste des transactions
      */
     @Override
+    @Transactional(readOnly = true)
     public List<ExistingTransactionDTO> getAllTransactions(int currentUserId) {
 
         userRepository.findById(currentUserId)

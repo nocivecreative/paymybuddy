@@ -65,6 +65,7 @@ public class RelationService implements RelationManagementInterface {
      * @return La liste des realtions existantes
      */
     @Override
+    @Transactional(readOnly = true)
     public List<RelationDTO> getRelations(int currentUserId) {
         User user = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur introuvable"));
