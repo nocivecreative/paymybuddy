@@ -109,7 +109,10 @@ public class UserController {
             @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
-            populateProfilModel(model, currentUser);
+            UserProfilDTO currentUserProfil = new UserProfilDTO(currentUser.getUsername(), currentUser.getEmail());
+            model.addAttribute("profil", currentUserProfil);
+            // Ne pas réinitialiser newPassDTO pour conserver les erreurs de validation
+            model.addAttribute("hasPasswordErrors", true);
             return "profil";
         }
 
