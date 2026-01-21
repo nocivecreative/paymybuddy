@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.openclassrooms.paymybuddy.dto.request.NewTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.ExistingTransactionDTO;
 import com.openclassrooms.paymybuddy.dto.response.RelationDTO;
+import com.openclassrooms.paymybuddy.exceptions.UserNotFoundException;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
 import com.openclassrooms.paymybuddy.service.RelationService;
 import com.openclassrooms.paymybuddy.service.TransactionService;
@@ -38,16 +39,12 @@ public class TransactionController {
      * @return la vue transfert
      */
     @GetMapping("/transfert")
-    public String transfert(
+    public String getTransfert(
             Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
-        List<RelationDTO> relations = relationService.getRelations(currentUser.getId());
-
-        List<ExistingTransactionDTO> transactions = transactionService.getAllTransactions(currentUser.getId());
-
-        model.addAttribute("relations", relations);
-        model.addAttribute("transactions", transactions);
+        populateTransfertModel(model, currentUser.getId());
+        model.addAttribute("newTransactionDTO", new NewTransactionDTO());
         return "transfert";
     }
 
@@ -55,26 +52,57 @@ public class TransactionController {
      * Effectue un transfert d'argent vers un ami.
      *
      * @param transaction   données de la transaction (ami, montant, description)
-     * @param currentUser   l'utilisateur connecté
      * @param bindingResult résultat de la validation
+     * @param model         le modèle pour la vue
+     * @param currentUser   l'utilisateur connecté
      * @return redirection vers transfert
      */
     @PostMapping("/transfert")
-    public String transfert(
-            @ModelAttribute @Valid NewTransactionDTO transaction,
+    public String postTransfert(
+            @Valid @ModelAttribute("newTransactionDTO") NewTransactionDTO transaction,
             BindingResult bindingResult,
+            Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
+            populateTransfertModel(model, currentUser.getId());
             return "transfert";
         }
 
-        transactionService.doTransaction(currentUser.getId(),
-                transaction.getFriendId(),
-                transaction.getAmount(),
-                transaction.getDescription());
+        try {
+            transactionService.doTransaction(currentUser.getId(),
+                    transaction.getFriendId(),
+                    transaction.getAmount(),
+                    transaction.getDescription());
+        } catch (UserNotFoundException _) { // " _" = Unnamed Variables (Java 22+) : indique explicitement que
+                                            // l'exception est
+                                            // capturée mais jamais utilisée. On n'a pas besoin d'accéder à son message
+                                            // ou sa stack trace.
+            bindingResult.reject("user.notfound", "Erreur lors du transfert");
+            populateTransfertModel(model, currentUser.getId());
+            return "transfert";
+        } catch (IllegalArgumentException _) {
+            bindingResult.reject("amount.invalid", "Erreur lors du transfert");
+            populateTransfertModel(model, currentUser.getId());
+            return "transfert";
+        }
 
         return "redirect:/transfert";
+    }
+
+    /**
+     * Méthode utilitaire privée qui peuple le model avec les reltions et les
+     * transaction d'un user
+     * Cette methode est un helper qui évite la duplication de code
+     * 
+     * @param model  le modèle pour la vue
+     * @param userId ID de l'utilisateur
+     */
+    private void populateTransfertModel(Model model, Integer userId) {
+        List<RelationDTO> relations = relationService.getRelations(userId);
+        List<ExistingTransactionDTO> transactions = transactionService.getAllTransactions(userId);
+        model.addAttribute("relations", relations);
+        model.addAttribute("transactions", transactions);
     }
 
 }
