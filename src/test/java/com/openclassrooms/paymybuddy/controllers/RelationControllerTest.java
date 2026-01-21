@@ -56,7 +56,7 @@ class RelationControllerTest {
         doNothing().when(relationService).addRelation(anyInt(), anyString());
 
         // Act
-        String result = relationController.postAddRelation(findUserDTO, securityUser, bindingResult);
+        String result = relationController.postAddRelation(findUserDTO, bindingResult, securityUser);
 
         // Assert
         assertEquals("redirect:/transfert", result);
@@ -70,7 +70,7 @@ class RelationControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         // Act
-        String result = relationController.postAddRelation(findUserDTO, securityUser, bindingResult);
+        String result = relationController.postAddRelation(findUserDTO, bindingResult, securityUser);
 
         // Assert
         assertEquals("transfert", result);

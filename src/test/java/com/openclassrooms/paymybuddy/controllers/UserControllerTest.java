@@ -1,15 +1,18 @@
 package com.openclassrooms.paymybuddy.controllers;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,7 +104,7 @@ class UserControllerTest {
         // Arrange - setup done in @BeforeEach
 
         // Act
-        String result = userController.getMethodName(model, securityUser);
+        String result = userController.getProfil(model, securityUser);
 
         // Assert
         assertEquals("profil", result);
@@ -116,7 +119,7 @@ class UserControllerTest {
         doNothing().when(userService).updateUserInfos(any(User.class));
 
         // Act
-        String result = userController.profilEdit(newPassDTO, securityUser, bindingResult);
+        String result = userController.profilEdit(newPassDTO, bindingResult, securityUser);
 
         // Assert
         assertEquals("redirect:/profil", result);
@@ -130,7 +133,7 @@ class UserControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         // Act
-        String result = userController.profilEdit(newPassDTO, securityUser, bindingResult);
+        String result = userController.profilEdit(newPassDTO, bindingResult, securityUser);
 
         // Assert
         assertEquals("profil", result);

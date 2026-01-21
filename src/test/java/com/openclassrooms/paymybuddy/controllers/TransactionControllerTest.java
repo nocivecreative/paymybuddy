@@ -1,19 +1,22 @@
 package com.openclassrooms.paymybuddy.controllers;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,7 +59,7 @@ class TransactionControllerTest {
         when(transactionService.getAllTransactions(anyInt())).thenReturn(List.of());
 
         // Act
-        String result = transactionController.tansfert(model, securityUser);
+        String result = transactionController.transfert(model, securityUser);
 
         // Assert
         assertEquals("transfert", result);
@@ -72,7 +75,7 @@ class TransactionControllerTest {
         doNothing().when(transactionService).doTransaction(anyInt(), anyInt(), any(BigDecimal.class), any());
 
         // Act
-        String result = transactionController.transfert(transaction, securityUser, bindingResult);
+        String result = transactionController.transfert(transaction, bindingResult, securityUser);
 
         // Assert
         assertEquals("redirect:/transfert", result);
@@ -86,7 +89,7 @@ class TransactionControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         // Act
-        String result = transactionController.transfert(transaction, securityUser, bindingResult);
+        String result = transactionController.transfert(transaction, bindingResult, securityUser);
 
         // Assert
         assertEquals("transfert", result);
