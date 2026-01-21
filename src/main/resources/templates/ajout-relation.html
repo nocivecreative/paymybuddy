@@ -44,14 +44,21 @@
                 <div class="card shadow p-4" style="width: 25rem;">
                     <div class="row align-items-center">
 
-                        <form th:action="@{/ajout-relation}" method="post" class="d-flex align-items-end gap-3">
+                        <form th:action="@{/ajout-relation}" th:object="${findUserDTO}" method="post" class="d-flex flex-wrap align-items-end gap-3">
                             <div class="col-8">
                                 <label for="mail" class="form-label">Chercher une relation</label>
-                                <input name="mail" type="email" class="form-control" aria-describedby="mail" placeholder="Saisir une adresse mail" required>
+                                <input th:field="*{mail}" type="email" class="form-control"
+                                    th:classappend="${#fields.hasErrors('mail')} ? 'is-invalid'"
+                                    aria-describedby="mail" placeholder="Saisir une adresse mail">
+                                <div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="invalid-feedback"></div>
                             </div>
 
                             <div class="col-4">
                                 <button type="submit" class="btn orange-bg px-3 text-light fw-bold">Ajouter</button>
+                            </div>
+
+                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3 col-12">
+                                Erreur lors de l'ajout de la relation
                             </div>
                         </form>
 

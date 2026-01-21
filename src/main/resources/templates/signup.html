@@ -34,7 +34,7 @@
         <div class="card shadow p-4" style="width: 20rem;">
 
 
-            <form th:action="@{/signup}" method="post">
+            <form th:action="@{/signup}" th:object="${newUserDTO}" method="post">
                 <p>
                 <h2 class="text-center"><span class="badge orange-bg text-light p-3">Pay my Buddy</span></h2>
                 </p>
@@ -44,21 +44,27 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input name="username" type="text" class="form-control" aria-describedby="Username">
+                    <input th:field="*{username}" type="text" class="form-control"
+                        th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'" aria-describedby="Username">
+                    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="username" class="form-label">Adresse mail</label>
-                    <input name="email" type="email" class="form-control"
-                        aria-describedby="Adresse mail">
+                    <label for="email" class="form-label">Adresse mail</label>
+                    <input th:field="*{email}" type="email" class="form-control"
+                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" aria-describedby="Adresse mail">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input name="password" type="password" class="form-control">
+                    <input th:field="*{password}" type="password" class="form-control"
+                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
                 </div>
 
-                <div th:if="${param.error}" class="text-danger mb-3">
-                    Utilisateur existant
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3">
+                    Erreur de création de compte
                 </div>
+                
 
                 <p class="text-center">
                     <button type="submit" class="btn btn-primary text-end">S'inscrire</button>

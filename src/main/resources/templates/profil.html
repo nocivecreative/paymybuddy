@@ -68,7 +68,7 @@
 
 
     <!-- Modal -->
-    <form th:action="@{/profil}" method="post">
+    <form th:action="@{/profil}" th:object="${newPassDTO}" method="post">
         <div class="modal fade" id="changePass" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="changePassLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -81,7 +81,13 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Nouveau mot de passe</label>
-                            <input name="password" type="password" class="form-control">
+                            <input th:field="*{password}" type="password" class="form-control"
+                                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+                        </div>
+
+                        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                            Erreur lors de la mise à jour
                         </div>
 
                     </div>
@@ -97,6 +103,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
+    <!-- Réouvre la modale si erreurs de validation -->
+    <script th:if="${hasPasswordErrors}">
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = new bootstrap.Modal(document.getElementById('changePass'));
+            modal.show();
+        });
+    </script>
 
 </body>
 

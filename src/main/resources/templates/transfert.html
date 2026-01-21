@@ -42,36 +42,42 @@
         <!-- Row action -->
         <div class="row mb-3">
 
-            <form th:action="@{/transfert}" method="post" class="d-flex align-items-center gap-3">
+            <form th:action="@{/transfert}" th:object="${newTransactionDTO}" method="post" class="d-flex align-items-center gap-3">
                 <!-- dropdown -->
                 <div class="col-4 dropdown">
-    
-                    <select class="form-select" name="friendId"  required>
-                        <option selected disabled>Selectionner une relation</option>
-                        <option 
+                    <select th:field="*{friendId}" class="form-select"
+                        th:classappend="${#fields.hasErrors('friendId')} ? 'is-invalid'">
+                        <option value="" selected disabled>Selectionner une relation</option>
+                        <option
                             th:each="relation : ${relations}"
-                            th:value="${relation.id}" 
+                            th:value="${relation.id}"
                             th:text="${relation.username  + ' (' + relation.email + ')'}">
                         </option>
                     </select>
-
+                    <div th:if="${#fields.hasErrors('friendId')}" th:errors="*{friendId}" class="invalid-feedback"></div>
                 </div>
-    
+
                 <!-- description -->
                 <div class="col-2">
-                    <input name="description" type="text" class="form-control" aria-describedby="Description"
+                    <input th:field="*{description}" type="text" class="form-control" aria-describedby="Description"
                         placeholder="Description">
                 </div>
-    
+
                 <!-- Montant -->
                 <div class="col-2 input-group w-auto">
-                    <input name="amount" type="number" class="form-control" min="0" step="0.01" placeholder="0">
+                    <input th:field="*{amount}" type="number" class="form-control" min="0" step="0.01" placeholder="0"
+                        th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid'">
                     <span class="input-group-text">€</span>
+                    <div th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="invalid-feedback"></div>
                 </div>
-    
+
                 <!-- CTA -->
                 <div class="col-2">
                     <button type="submit" class="btn btn-primary p-3">Payer</button>
+                </div>
+
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3">
+                    Erreur lors du transfert
                 </div>
             </form>
 
