@@ -2,12 +2,12 @@ package com.openclassrooms.paymybuddy.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.paymybuddy.exceptions.UserAlreadyExistsException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 /**
