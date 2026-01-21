@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.openclassrooms.paymybuddy.dto.request.NewPassDTO;
 import com.openclassrooms.paymybuddy.dto.request.NewUserDTO;
 import com.openclassrooms.paymybuddy.dto.response.UserProfilDTO;
+import com.openclassrooms.paymybuddy.exceptions.UserAlreadyExistsException;
 import com.openclassrooms.paymybuddy.model.User;
 import com.openclassrooms.paymybuddy.security.SecurityUser;
-import com.openclassrooms.paymybuddy.service.RelationService;
 import com.openclassrooms.paymybuddy.service.UserAccountService;
 
 import jakarta.validation.Valid;
@@ -27,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserAccountService userService;
-    private final RelationService relationService;
 
     /**
      * Affiche la page d'accueil.
@@ -42,10 +41,12 @@ public class UserController {
     /**
      * Affiche la page d'inscription.
      *
+     * @param model le modèle pour la vue
      * @return la vue signup
      */
     @GetMapping("/signup")
-    public String getSignup() {
+    public String getSignup(Model model) {
+        model.addAttribute("newUserDTO", new NewUserDTO());
         return "signup";
     }
 
@@ -57,15 +58,20 @@ public class UserController {
      * @return redirection vers login si succès, sinon retour sur signup
      */
     @PostMapping("/signup")
-    public String postSignup(@Valid @ModelAttribute NewUserDTO newUserDto, BindingResult bindingResult) {
+    public String postSignup(@Valid @ModelAttribute("newUserDTO") NewUserDTO newUserDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "signup";
         }
 
-        userService.createAccount(new User(
-                newUserDto.getUsername(),
-                newUserDto.getEmail(),
-                newUserDto.getPassword()));
+        try {
+            userService.createAccount(new User(
+                    newUserDto.getUsername(),
+                    newUserDto.getEmail(),
+                    newUserDto.getPassword()));
+        } catch (UserAlreadyExistsException _) {
+            bindingResult.reject("user.exists", "Erreur de création de compte");
+            return "signup";
+        }
 
         return "redirect:/login";
     }
@@ -82,36 +88,50 @@ public class UserController {
             Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
-        UserProfilDTO currentUserProfil = new UserProfilDTO(currentUser.getUsername(), currentUser.getEmail());
-
-        model.addAttribute("profil", currentUserProfil);
-
+        populateProfilModel(model, currentUser);
         return "profil";
     }
 
     /**
      * Met à jour le mot de passe de l'utilisateur.
      *
-     * @param newPass       données du formulaire avec le nouveau mot de passe
-     * @param currentUser   l'utilisateur connecté
+     * @param newPassDTO    données du formulaire avec le nouveau mot de passe
      * @param bindingResult résultat de la validation
+     * @param model         le modèle pour la vue
+     * @param currentUser   l'utilisateur connecté
      * @return redirection vers profil
      */
     @PostMapping("/profil")
-    public String profilEdit(
-            @ModelAttribute @Valid NewPassDTO newPass,
+    public String postProfil(
+            @Valid @ModelAttribute("newPassDTO") NewPassDTO newPassDTO,
             BindingResult bindingResult,
+            Model model,
             @AuthenticationPrincipal SecurityUser currentUser) {
 
         if (bindingResult.hasErrors()) {
+            populateProfilModel(model, currentUser);
             return "profil";
         }
+
         User newUserInfos = new User(currentUser.getId(), currentUser.getUsername(), currentUser.getEmail(),
-                newPass.getPassword());
+                newPassDTO.getPassword());
 
         userService.updateUserInfos(newUserInfos);
 
         return "redirect:/profil";
+    }
+
+    /**
+     * Méthode utilitaire privée qui peuple le model avec les données du currentUser
+     * Cette methode est un helper qui évite la duplication de code
+     * 
+     * @param model  le modèle pour la vue
+     * @param userId ID de l'utilisateur
+     */
+    private void populateProfilModel(Model model, SecurityUser currentUser) {
+        UserProfilDTO currentUserProfil = new UserProfilDTO(currentUser.getUsername(), currentUser.getEmail());
+        model.addAttribute("profil", currentUserProfil);
+        model.addAttribute("newPassDTO", new NewPassDTO());
     }
 
 }
