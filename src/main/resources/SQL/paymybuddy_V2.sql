@@ -53,16 +53,16 @@ CREATE TABLE `paymybuddy`.`users_relations` (
 );  
 
 
--- Insertion de vlaurs de test
+-- Insertion de valeurs de test
 
 -- Table "users" :
 ------------------------
--- User de test : 
----- username: user1
+-- Users de test : 
+---- usernames: user1, user2, user3
 ---- pass:  user
 ------------------------
 INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user1', 'user1@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
-INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user2', 'user2@gmail.com', 'user2');
-INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user3', 'user3@gmail.com', 'user3');
+INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user2', 'user2@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
+INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user3', 'user3@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
 
 
