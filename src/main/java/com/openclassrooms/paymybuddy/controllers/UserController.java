@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserAccountService userService;
 
     /**
@@ -70,6 +73,7 @@ public class UserController {
                     newUserDto.getPassword()));
         } catch (UserAlreadyExistsException _) {
             bindingResult.reject("user.exists", "Erreur de création de compte");
+            logger.error("Erreur de création de compte");
             return "signup";
         }
 

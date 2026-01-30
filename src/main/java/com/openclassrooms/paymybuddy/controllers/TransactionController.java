@@ -2,6 +2,8 @@ package com.openclassrooms.paymybuddy.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionController {
 
+    private final Logger logger = LoggerFactory.getLogger(TransactionController.class);
     private final TransactionService transactionService;
     private final RelationService relationService;
 
@@ -80,10 +83,12 @@ public class TransactionController {
                                             // ou sa stack trace.
             bindingResult.reject("user.notfound", "Erreur lors du transfert");
             populateTransfertModel(model, currentUser.getId());
+            logger.error("Erreur lors du transfert");
             return "transfert";
         } catch (IllegalArgumentException _) {
             bindingResult.reject("amount.invalid", "Erreur lors du transfert");
             populateTransfertModel(model, currentUser.getId());
+            logger.error("Erreur lors du transfert");
             return "transfert";
         }
 
