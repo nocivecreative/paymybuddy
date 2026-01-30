@@ -1,5 +1,7 @@
 package com.openclassrooms.paymybuddy.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RelationController {
 
+    private final Logger logger = LoggerFactory.getLogger(RelationController.class);
     private final RelationService relationService;
 
     /**
@@ -59,12 +62,15 @@ public class RelationController {
             relationService.addRelation(currentUser.getId(), findUserDTO.getMail());
         } catch (UserNotFoundException _) {
             bindingResult.reject("user.notfound", "Erreur lors de l'ajout de la relation");
+            logger.error("Erreur lors de l'ajout de la relation");
             return "ajout-relation";
         } catch (IllegalArgumentException _) {
             bindingResult.reject("relation.invalid", "Erreur lors de l'ajout de la relation");
+            logger.error("Erreur lors de l'ajout de la relation");
             return "ajout-relation";
         } catch (IllegalStateException _) {
             bindingResult.reject("relation.exists", "Erreur lors de l'ajout de la relation");
+            logger.error("Erreur lors de l'ajout de la relation");
             return "ajout-relation";
         }
 

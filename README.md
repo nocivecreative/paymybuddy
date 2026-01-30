@@ -26,6 +26,13 @@ Ce projet à été créé dans le cadre de ma formation **Développeur d'applica
 
 2. Créer un utilisateur MySQL `buddy` avec accès à la base `paymybuddy`, ou modifier les credentials dans `application.properties`
 
+3. Infos : Lors de l'éxecution du script SQL, une liste d'utilisateurs tests sont créés permettant d'utiliser la fonction d'ajout de relation et de transfert simplement:
+   ```
+   1. username : 'user1' - email : 'user1@gmail.com' - password : 'user'
+   2. username : 'user2' - email : 'user2@gmail.com' - password : 'user'
+   3. username : 'user3' - email : 'user3@gmail.com' - password : 'user'
+   ```
+
 ## Configuration
 
 Fichier `src/main/resources/application.properties` :
