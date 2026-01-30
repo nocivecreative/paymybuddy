@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <a href="#main-content" class="visually-hidden-focusable">Aller au contenu principal</a>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -22,42 +23,46 @@
                 <h4>Pay My Buddy</h4>
             </a>
 
-            <ul class="nav nav-pills align-content-center gap-3 gap-3">
-                <li class="nav-item"><a href="/transfert" class="nav-link">Tranférer</a></li>
-                <li class="nav-item"><a href="/profil" class="nav-link">Profil</a></li>
-                <li class="nav-item"><a href="/ajout-relation" class="nav-link active" aria-current="page">Ajouter
-                        relation</a></li>
-                <li class="nav-item">
-                    <form th:action="@{/logout}" method="post" class="d-inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="btn btn-outline-danger">
-                            Se déconnecter
-                        </button>
-                    </form>
-                </li>
-            </ul>
+            <nav aria-label="Navigation principale">
+                <ul class="nav nav-pills align-content-center gap-3 gap-3">
+                    <li class="nav-item"><a href="/transfert" class="nav-link">Tranférer</a></li>
+                    <li class="nav-item"><a href="/profil" class="nav-link">Profil</a></li>
+                    <li class="nav-item"><a href="/ajout-relation" class="nav-link active" aria-current="page">Ajouter
+                            relation</a></li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-outline-danger">
+                                Se déconnecter
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </header>
     </div>
-    <div class="container">
+    <div id="main-content" class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <div class="card shadow p-4" style="width: 25rem;">
                     <div class="row align-items-center">
 
-                        <form th:action="@{/ajout-relation}" th:object="${findUserDTO}" method="post" class="d-flex flex-wrap align-items-end gap-3">
+                        <form th:action="@{/ajout-relation}" th:object="${findUserDTO}" method="post"
+                            class="d-flex flex-wrap align-items-end gap-3">
                             <div class="col-8">
                                 <label for="mail" class="form-label">Chercher une relation</label>
-                                <input th:field="*{mail}" type="email" class="form-control"
-                                    th:classappend="${#fields.hasErrors('mail')} ? 'is-invalid'"
-                                    aria-describedby="mail" placeholder="Saisir une adresse mail">
-                                <div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="invalid-feedback"></div>
+                                <input id="mail" th:field="*{mail}" type="email" class="form-control"
+                                    th:classappend="${#fields.hasErrors('mail')} ? 'is-invalid'" aria-describedby="mail"
+                                    placeholder="Saisir une adresse mail">
+                                <div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" class="invalid-feedback">
+                                </div>
                             </div>
 
                             <div class="col-4">
-                                <button type="submit" class="btn orange-bg px-3 text-light fw-bold">Ajouter</button>
+                                <button type="submit" class="btn btn-warning px-3 fw-bold">Ajouter</button>
                             </div>
 
-                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3 col-12">
+                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mt-3 col-12" role="alert">
                                 Erreur lors de l'ajout de la relation
                             </div>
                         </form>

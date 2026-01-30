@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,24 +15,17 @@
 </head>
 
 <body>
+    <a href="#main-content" class="visually-hidden-focusable">Aller au contenu principal</a>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <img src="../assets/images/pmb_logo_145.png" class="pmb-logo header me-3" alt="PayMyBuddy">
                 <h4>Pay My Buddy</h4>
             </a>
-
-            <!-- <ul class="nav nav-pills align-content-center gap-3">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Tranférer</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Profil</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Ajouter relation</a></li>
-                <li class="nav-item"><a href="#" class="btn btn-outline-danger">Se déconnecter</a></li>
-            </ul> -->
         </header>
     </div>
-    <div class="container d-flex justify-content-center">
+    <div id="main-content" class="container d-flex justify-content-center">
         <div class="card shadow p-4" style="width: 20rem;">
-
 
             <form th:action="@{/signup}" th:object="${newUserDTO}" method="post">
                 <p>
@@ -44,24 +37,24 @@
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input th:field="*{username}" type="text" class="form-control"
-                        th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'" aria-describedby="Username">
+                    <input id="username" th:field="*{username}" type="text" class="form-control"
+                        th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'" aria-describedby="username">
                     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Adresse mail</label>
-                    <input th:field="*{email}" type="email" class="form-control"
-                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" aria-describedby="Adresse mail">
+                    <input id="email" th:field="*{email}" type="email" class="form-control"
+                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" aria-describedby="email">
                     <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input th:field="*{password}" type="password" class="form-control"
-                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                    <input id="password" th:field="*{password}" type="password" class="form-control"
+                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" aria-describedby="password">
                     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
                 </div>
 
-                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3">
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger mb-3" role="alert">
                     Erreur de création de compte
                 </div>
                 

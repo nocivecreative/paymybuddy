@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,32 +15,36 @@
 </head>
 
 <body>
-    <div class="container">
+    <a href="#main-content" class="visually-hidden-focusable">Aller au contenu principal</a>
+    <div id="main-content" class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <img src="../assets/images/pmb_logo_145.png" class="pmb-logo header me-3" alt="PayMyBuddy">
                 <h4>Pay My Buddy</h4>
             </a>
 
-            <ul class="nav nav-pills align-content-center gap-3">
-                <li class="nav-item"><a href="/transfert" class="nav-link">Tranférer</a></li>
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Profil</a></li>
-                <li class="nav-item"><a href="/ajout-relation" class="nav-link">Ajouter relation</a></li>
-                <li class="nav-item">
-                    <form th:action="@{/logout}" method="post" class="d-inline">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="btn btn-outline-danger">
-                            Se déconnecter
-                        </button>
-                    </form>
-                </li>
-            </ul>
+            <nav aria-label="Navigation principale">
+                <ul class="nav nav-pills align-content-center gap-3">
+                    <li class="nav-item"><a href="/transfert" class="nav-link">Tranférer</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Profil</a></li>
+                    <li class="nav-item"><a href="/ajout-relation" class="nav-link">Ajouter relation</a></li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-outline-danger">
+                                Se déconnecter
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
         </header>
     </div>
     <div class="container d-flex justify-content-center">
         <div class="card shadow p-4" style="width: 20rem;">
 
             <table class="table">
+                <caption class="visually-hidden">Informations du profil</caption>
                 <tbody>
                     <tr>
                         <td class="fw-bold">username</td>
@@ -59,7 +63,7 @@
             </table>
 
             <p class="text-center">
-                <button type="submit" class="btn orange-bg text-end text-light fw-bold" data-bs-toggle="modal"
+                <button type="submit" class="btn btn-warning text-end text-light fw-bold" data-bs-toggle="modal"
                     data-bs-target="#changePass">Modifier</button>
             </p>
 
@@ -81,12 +85,13 @@
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Nouveau mot de passe</label>
-                            <input th:field="*{password}" type="password" class="form-control"
+                            <input id="password" th:field="*{password}" type="password" class="form-control"
                                 th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
-                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                class="invalid-feedback"></div>
                         </div>
 
-                        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
                             Erreur lors de la mise à jour
                         </div>
 
@@ -106,7 +111,7 @@
 
     <!-- Réouvre la modale si erreurs de validation -->
     <script th:if="${hasPasswordErrors}">
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var modal = new bootstrap.Modal(document.getElementById('changePass'));
             modal.show();
         });

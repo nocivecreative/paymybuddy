@@ -1,42 +1,55 @@
 :root {
     --orange-pmb: #f69f1d;
+    --orange-pmb-025: rgba(246, 159, 29, 0.25);
     --orange-dark-pmb: #d68b1b;
 
-    --pink-pmb : #fa3399;
-    --blue-pmb : #0aacfc;
+    --pink-pmb: #fa3399;
+    --blue-pmb: #0aacfc;
 }
 
-.orange-bg{
+.orange-bg {
     background-color: var(--orange-pmb);
 }
 
-.btn.orange-bg:hover{
+.btn.orange-bg:hover {
     background-color: var(--orange-dark-pmb);
 }
 
-.text-orange-pmb{
+.btn.orange-bg:focus-visible{
+    background-color: var(--orange-dark-pmb) !important;
+    border-color: var(--pink-pmb) !important;
+    box-shadow: 0 0 0 .25rem var(--orange-pmb-025);
+}
+
+.btn.orange-bg:focus:not(:focus-visible){
+    outline: 0;
+}
+
+.text-orange-pmb {
     color: var(--orange-pmb);
 }
-.text-pink-pmb{
+
+.text-pink-pmb {
     color: var(--pink-pmb);
 }
-.text-blue-pmb{
+
+.text-blue-pmb {
     color: var(--blue-pmb);
 }
 
-.pmb-logo.header{
+.pmb-logo.header {
     width: 50px;
 }
 
-.pmb-typo{
+.pmb-typo {
     font-family: "Times New Roman", Times, serif;
     font-weight: 700;
 }
 
-.eur::after{
+.eur::after {
     content: ' €';
 }
 
-.fs-5em{
+.fs-5em {
     font-size: 5em;
 }
