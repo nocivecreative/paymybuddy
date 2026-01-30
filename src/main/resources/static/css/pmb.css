@@ -1,6 +1,9 @@
 :root {
     --orange-pmb: #f69f1d;
     --orange-dark-pmb: #d68b1b;
+
+    --pink-pmb : #fa3399;
+    --blue-pmb : #0aacfc;
 }
 
 .orange-bg{
@@ -9,6 +12,16 @@
 
 .btn.orange-bg:hover{
     background-color: var(--orange-dark-pmb);
+}
+
+.text-orange-pmb{
+    color: var(--orange-pmb);
+}
+.text-pink-pmb{
+    color: var(--pink-pmb);
+}
+.text-blue-pmb{
+    color: var(--blue-pmb);
 }
 
 .pmb-logo.header{
@@ -22,4 +35,8 @@
 
 .eur::after{
     content: ' €';
+}
+
+.fs-5em{
+    font-size: 5em;
 }
