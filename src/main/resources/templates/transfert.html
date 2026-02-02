@@ -54,7 +54,8 @@
                             th:text="${relation.username  + ' (' + relation.email + ')'}">
                         </option>
                     </select>
-
+                    <div th:if="${#fields.hasErrors('friendId')}" th:errors="*{friendId}" class="invalid-feedback">
+                    </div>
                 </div>
     
                 <!-- description -->
