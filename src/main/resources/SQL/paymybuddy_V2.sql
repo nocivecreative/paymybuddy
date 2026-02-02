@@ -45,7 +45,6 @@ CREATE TABLE `paymybuddy`.`users_relations` (
     `id_user` INT NOT NULL,
     `id_friend` INT NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP(),
     PRIMARY KEY (`id_user`, `id_friend`),
     CONSTRAINT fk_user  FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_friend  FOREIGN KEY (id_friend) REFERENCES users(id) ON DELETE CASCADE,
@@ -59,10 +58,10 @@ CREATE TABLE `paymybuddy`.`users_relations` (
 ------------------------
 -- Users de test : 
 ---- usernames: user1, user2, user3
----- pass:  user
+---- pass:  user12345678
 ------------------------
-INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user1', 'user1@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
-INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user2', 'user2@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
-INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user3', 'user3@gmail.com', '$2a$10$AfZPpxE82weRCehwfE.0qeTetnz1igtcYk9NxtKITs1dTQ5ocoDv.');
+INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user1', 'user1@gmail.com', '$2a$10$.Gj8pb4k9x6TZTp2lwddgODgJEIifFgC9VathAk5Qk8mC/vy.xTdu');
+INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user2', 'user2@gmail.com', '$2a$10$.Gj8pb4k9x6TZTp2lwddgODgJEIifFgC9VathAk5Qk8mC/vy.xTdu');
+INSERT INTO `paymybuddy`.`users` (`username`, `email`, `password`) VALUES ('user3', 'user3@gmail.com', '$2a$10$.Gj8pb4k9x6TZTp2lwddgODgJEIifFgC9VathAk5Qk8mC/vy.xTdu');
 
 
