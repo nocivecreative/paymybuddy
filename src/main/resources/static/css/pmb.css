@@ -7,20 +7,24 @@
     --blue-pmb: #0aacfc;
 }
 
-.orange-bg {
+/* unused : non conforme WCAG */
+.orange-bg { 
     background-color: var(--orange-pmb);
 }
 
+/* unused : non conforme WCAG */
 .btn.orange-bg:hover {
     background-color: var(--orange-dark-pmb);
 }
 
+/* unused : non conforme WCAG */
 .btn.orange-bg:focus-visible{
     background-color: var(--orange-dark-pmb) !important;
     border-color: var(--pink-pmb) !important;
     box-shadow: 0 0 0 .25rem var(--orange-pmb-025);
 }
 
+/* unused : non conforme WCAG */
 .btn.orange-bg:focus:not(:focus-visible){
     outline: 0;
 }

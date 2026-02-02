@@ -55,7 +55,7 @@
                         <option th:each="relation : ${relations}" th:value="${relation.id}"
                             th:text="${relation.username  + ' (' + relation.email + ')'}">
                         </option>
-                    </selec t>
+                    </select>
                     <div th:if="${#fields.hasErrors('friendId')}" th:errors="*{friendId}" class="invalid-feedback">
                     </div>
                 </div>
