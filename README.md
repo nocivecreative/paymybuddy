@@ -7,9 +7,11 @@ Ce projet à été créé dans le cadre de ma formation **Développeur d'applica
 > ### Type : Livrable ###
 > #### Repo source : empty project ####
 > #### Date de démarrage du projet : 01/01/2026 ####
-## Checklist
 
-à rédiger
+## Modèle Physiquue de Données (MPD)
+
+![PMB MDP](./src/main/resources/MPD/PMB-MPD.png)
+
 
 ## Prérequis
 

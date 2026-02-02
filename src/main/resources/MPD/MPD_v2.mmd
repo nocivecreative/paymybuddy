@@ -1,0 +1,31 @@
+---
+title: MPD Pay My Buddy - Version 2
+---
+erDiagram
+    users {
+        INT id PK "AUTO_INCREMENT"
+        VARCHAR_50 username UK "NOT NULL"
+        VARCHAR_100 email UK "NOT NULL"
+        VARCHAR_255 password "NOT NULL"
+        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
+        TIMESTAMP updated_at "ON UPDATE CURRENT_TIMESTAMP"
+    }
+
+    transactions {
+        INT id PK "AUTO_INCREMENT"
+        INT id_user_sender FK "NOT NULL"
+        INT id_user_receiver FK "NOT NULL"
+        DECIMAL_10_2 amount "NOT NULL"
+        VARCHAR_255 description "NULL"
+        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
+        TIMESTAMP updated_at "ON UPDATE CURRENT_TIMESTAMP"
+    }
+
+    users_relations {
+        INT id_user PK,FK "NOT NULL"
+        INT id_friend PK,FK "NOT NULL"
+        TIMESTAMP created_at "DEFAULT CURRENT_TIMESTAMP"
+    }
+
+    users ||--o{ transactions : ""
+    users ||--o{ users_relations : ""
